@@ -16,10 +16,11 @@ module.exports.getAllPatientsFiles = async (req, res) => {
     if (!ObjectID.isValid(req.params.id))
         return res.status(400).send("ID unknown : " + req.params.id);
     try {
-        await FileModel.find({patientId:req.params.id}, (err, docs) => {
+
+        await dispatch( FileModel.find({patientId:req.params.id}, (err, docs) => {
         if (!err) res.status(200).send(docs);
         else console.log("Error to get file : " + err);
-      });
+      }));
     } catch (err) {
         console.log("Error to get file : " + err);
     }
@@ -36,10 +37,11 @@ module.exports.getAllPatientsFiles = async (req, res) => {
 
 module.exports.getAllPatients = async (req, res) => {
     try {
-        await UserModel.find({is_patient:true}, (err, docs) => {
+
+        await dispatch( UserModel.find({is_patient:true}, (err, docs) => {
             if (!err) res.status(200).send(docs);
             else console.log("Error to get Patient : " + err);
-      });
+      }));
     } catch(err){
         console.log("Error to get Patient : " + err);
     }
