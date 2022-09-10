@@ -28,13 +28,16 @@ module.exports.getAllPatientsFiles = async (req, res) => {
 
  module.exports.getPatient = async (req, res) => {
     if (!ObjectID.isValid(req.params.id))
+    {
         return res.status(400).send("ID unknown : " + req.params.id);
+    }
      UserModel.find({is_patient:true, _id:req.params.id}, (err, docs) => {
         if (!err)
         {
             res.status(200).send(docs);
         }
-        else{
+        else
+        {
             console.log("Error to get data : " + err);
         }
       });
@@ -133,7 +136,6 @@ module.exports.follow = (req, res) => {
         {$addToSet: {followers: req.params.id}},
         {new: true, upsert: true},
         (err, docs) =>{
-            // if (!err) res.status(200).send(docs);
             if (err) return res.status(400).send(err);
         }    
     );
